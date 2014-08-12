@@ -17,6 +17,12 @@ use Nekland\YoutubeApi\Http\HttpClient;
 
 class Youtube extends Api
 {
+    
+    /**
+     * @var string
+     */
+    protected $api_key;    
+    
     /**
      * @param ClientInterface $httpClient
      */
@@ -27,6 +33,7 @@ class Youtube extends Api
         } else {
             parent::__construct($httpClient);
         }
+        
     }
 
     /**
@@ -39,6 +46,10 @@ class Youtube extends Api
         switch($name) {
             case 'videos':
                 return new \Nekland\YoutubeApi\Api\Videos($this);
+            case 'channels':
+                return new \Nekland\YoutubeApi\Api\Channels($this);
+            case 'playlistitems':
+                return new \Nekland\YoutubeApi\Api\PlaylistItems($this);                
             default:
                 throw new \InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
         }
