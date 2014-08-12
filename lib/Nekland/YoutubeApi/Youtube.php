@@ -17,12 +17,7 @@ use Nekland\YoutubeApi\Http\HttpClient;
 
 class Youtube extends Api
 {
-    
-    /**
-     * @var string
-     */
-    protected $api_key;    
-    
+
     /**
      * @param ClientInterface $httpClient
      */
