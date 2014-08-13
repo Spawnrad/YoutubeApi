@@ -21,56 +21,62 @@ use Nekland\BaseApi\Api\AbstractApi;
  *
  * @package Nekland\YoutubeApi\Api
  */
-class Channels extends AbstractApi {
+class Channels extends AbstractApi
+{
 
     const URL = 'youtube/v3/channels';
 
-    public function listByName($username, array $parts = ['snippet'], array $otherParameters = []) {
+    public function listByName($username, array $parts = ['snippet'], array $otherParameters = [])
+    {
 
         $parameters = array_merge(
-                ['part' => implode(',', $parts), 'forUsername' => $username], $otherParameters
+            ['part' => implode(',', $parts), 'forUsername' => $username], $otherParameters
         );
 
         return $this->get(self::URL, $parameters);
     }
 
-    public function listById($channelid, array $parts = ['snippet'], array $otherParameters = []) {
+    public function listById($channelid, array $parts = ['snippet'], array $otherParameters = [])
+    {
 
         $parameters = array_merge(
-                ['part' => implode(',', $parts), 'id' => $channelid, 'key' => 'AIzaSyBHqlUjoOxmZhg3SXwWzqxBEIpX_G_QjlU'], $otherParameters
+            ['part' => implode(',', $parts), 'id' => $channelid, 'key' => 'AIzaSyBHqlUjoOxmZhg3SXwWzqxBEIpX_G_QjlU'], $otherParameters
         );
 
         return $this->get(self::URL, $parameters);
     }
 
-    public function getUploadIdByName($username, array $parts = ['snippet'], array $otherParameters = []) {
+    public function getUploadIdByName($username, array $parts = ['snippet'], array $otherParameters = [])
+    {
 
         return $this->listByName($username, $parts, $otherParameters)['items'][0]['contentDetails']['relatedPlaylists']['uploads'];
     }
 
-    public function getUploadIdById($channelid, array $parts = ['snippet'], array $otherParameters = []) {
+    public function getUploadIdById($channelid, array $parts = ['snippet'], array $otherParameters = [])
+    {
 
         return $this->listById($channelid, $parts, $otherParameters)['items'][0]['contentDetails']['relatedPlaylists']['uploads'];
     }
 
-    public function getUploadIdFromUrl($url, array $parts = ['snippet'], array $otherParameters = []) {
+    public function getUploadIdFromUrl($url, array $parts = ['snippet'], array $otherParameters = [])
+    {
 
         return $this->getChannelFromURL($url, $parts, $otherParameters)['items'][0]['contentDetails']['relatedPlaylists']['uploads'];
     }
 
-    
-    
+
     /**
      * Get the channel object by supplying the URL of the channel page
      *
-     * 
+     *
      * @param type $youtube_url
      * @param array $parts
      * @param array $otherParameters
      * @return type
      * @throws \Exception
      */
-    public function getChannelFromURL($youtube_url, array $parts = ['snippet'], array $otherParameters = []) {
+    public function getChannelFromURL($youtube_url, array $parts = ['snippet'], array $otherParameters = [])
+    {
         if (strpos($youtube_url, 'youtube.com') === false) {
             throw new \Exception('The supplied URL does not look like a Youtube URL');
         }
@@ -97,7 +103,8 @@ class Channels extends AbstractApi {
      * @param  string $url the URL
      * @return string      the path string
      */
-    public static function _parse_url_path($url) {
+    public static function _parse_url_path($url)
+    {
         $array = parse_url($url);
         return $array['path'];
     }
