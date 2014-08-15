@@ -56,23 +56,42 @@ class PlaylistItems extends AbstractApi {
 
         return $item['snippet']['resourceId']['videoId'];
     }
-    
+
     public function getDescription($item) {
 
         return $item['snippet']['description'];
-    }    
+    }
 
-    
+    public function getPublishedAt($item) {
+
+        return $item['snippet']['publishedAt'];
+    }
+
     /*
      * Valid Size : default, medium, high, standard, maxres
      */
-    public function getThumbnail($item, $size = 'standard') {
-        
-        if (isset($item['snippet']['thumbnails'][$size])) {
-            return $item['snippet']['thumbnails'][$size];
+    public function getThumbnail($item, $size = null) {
+
+
+        if ($size) {
+            if (isset($item['snippet']['thumbnails'][$size])) {
+                return $item['snippet']['thumbnails'][$size];
+            } else {
+                throw new \Exception('Undefined size ' . $size);
+            }
         } else {
-            throw new \Exception('Undefined size '.$size);
-        }        
+            if (isset($item['snippet']['thumbnails']['maxres'])) {
+                return $item['snippet']['thumbnails']['maxres']['url'];
+            } elseif (isset($item['snippet']['thumbnails']['standard'])) {
+                return $item['snippet']['thumbnails']['standard']['url'];
+            } elseif (isset($item['snippet']['thumbnails']['medium'])) {
+                return $item['snippet']['thumbnails']['medium']['url'];
+            } elseif (isset($item['snippet']['thumbnails']['default'])) {
+                return $item['snippet']['thumbnails']['default']['url'];
+            } else {
+                throw new \Exception('no Thumbnails');
+            }
+        }
     }
 
 }

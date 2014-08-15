@@ -74,5 +74,52 @@ class Videos extends AbstractApi
 
         return $this->get(self::URL, $parameters);
     }
+    
+    public function getItems($id, array $parts = ['snippet'], array $otherParameters = []) {
+
+        return $this->listById($id, $parts, $otherParameters)['items'];
+    }
+
+    public function getTitle($item) {
+
+        return $item['snippet']['title'];
+    }
+
+    public function getDescription($item) {
+
+        return $item['snippet']['description'];
+    }
+
+    public function getPublishedAt($item) {
+
+        return $item['snippet']['publishedAt'];
+    }    
+    
+    /*
+     * Valid Size : default, medium, high, standard, maxres
+     */
+    public function getThumbnail($item, $size = null) {
+
+
+        if ($size) {
+            if (isset($item['snippet']['thumbnails'][$size])) {
+                return $item['snippet']['thumbnails'][$size];
+            } else {
+                throw new \Exception('Undefined size ' . $size);
+            }
+        } else {
+            if (isset($item['snippet']['thumbnails']['maxres'])) {
+                return $item['snippet']['thumbnails']['maxres']['url'];
+            } else if (isset($item['snippet']['thumbnails']['standard'])) {
+                return $item['snippet']['thumbnails']['standard']['url'];
+            } else if (isset($item['snippet']['thumbnails']['medium'])) {
+                return $item['snippet']['thumbnails']['medium']['url'];
+            } else if (isset($item['snippet']['thumbnails']['default'])) {
+                return $item['snippet']['thumbnails']['default']['url'];
+            } else {
+                throw new \Exception('no Thumbnails');
+            }
+        }
+    }    
 
 }
