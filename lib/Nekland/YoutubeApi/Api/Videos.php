@@ -75,27 +75,41 @@ class Videos extends AbstractApi
         return $this->get(self::URL, $parameters);
     }
     
+    /*
+     * Get Video Items By Id
+     */
     public function getItems($id, array $parts = ['snippet'], array $otherParameters = []) {
 
         return $this->listById($id, $parts, $otherParameters)['items'];
     }
 
+    /*
+     * Get Video Title
+     */    
     public function getTitle($item) {
 
         return $item['snippet']['title'];
     }
 
+    /*
+     * Get Video Description
+     */       
     public function getDescription($item) {
 
         return $item['snippet']['description'];
     }
 
+    /*
+     * Get Video PublishedAt
+     */       
     public function getPublishedAt($item) {
 
         return $item['snippet']['publishedAt'];
     }    
     
     /*
+     * Get Video Thumbnail Url
+     * If size is null, we return the highest valid size
      * Valid Size : default, medium, high, standard, maxres
      */
     public function getThumbnail($item, $size = null) {
