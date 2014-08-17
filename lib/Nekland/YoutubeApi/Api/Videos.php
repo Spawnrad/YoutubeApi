@@ -122,10 +122,10 @@ class Videos extends AbstractApi
                 throw new \Exception('Undefined size ' . $size);
             }
         } else {
-            if (isset($item['snippet']['thumbnails']['maxres'])) {
-                return $item['snippet']['thumbnails']['maxres']['url'];
-            } else if (isset($item['snippet']['thumbnails']['standard'])) {
+            if (isset($item['snippet']['thumbnails']['standard'])) {
                 return $item['snippet']['thumbnails']['standard']['url'];
+            } elseif (isset($item['snippet']['thumbnails']['maxres'])) {
+                return $item['snippet']['thumbnails']['standard']['maxres'];
             } else if (isset($item['snippet']['thumbnails']['medium'])) {
                 return $item['snippet']['thumbnails']['medium']['url'];
             } else if (isset($item['snippet']['thumbnails']['default'])) {
