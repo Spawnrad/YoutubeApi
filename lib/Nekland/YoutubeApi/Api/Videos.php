@@ -125,7 +125,7 @@ class Videos extends AbstractApi
             if (isset($item['snippet']['thumbnails']['standard'])) {
                 return $item['snippet']['thumbnails']['standard']['url'];
             } elseif (isset($item['snippet']['thumbnails']['maxres'])) {
-                return $item['snippet']['thumbnails']['standard']['maxres'];
+                return $item['snippet']['thumbnails']['maxres']['url'];
             } else if (isset($item['snippet']['thumbnails']['medium'])) {
                 return $item['snippet']['thumbnails']['medium']['url'];
             } else if (isset($item['snippet']['thumbnails']['default'])) {
