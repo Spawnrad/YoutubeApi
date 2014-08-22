@@ -21,63 +21,78 @@ use Nekland\BaseApi\Api\AbstractApi;
  *
  * @package Nekland\YoutubeApi\Api
  */
-class PlaylistItems extends AbstractApi {
+class PlaylistItems extends AbstractApi
+{
 
     const URL = 'youtube/v3/playlistItems';
 
     /**
      * @param $playlistId
-     * 
+     *
      * @param type $playlistId
      * @param array $parts
      * @param array $otherParameters
      * @return type
      */
-    public function listByPlaylistId($playlistId, array $parts = ['snippet'], array $otherParameters = []) {
+    public function listByPlaylistId($playlistId, array $parts = ['snippet'], array $otherParameters = [], array $headers = [])
+    {
 
         $parameters = array_merge(
-                ['part' => implode(',', $parts), 'playlistId' => $playlistId], $otherParameters
+            ['part' => implode(',', $parts), 'playlistId' => $playlistId], $otherParameters
         );
 
-        return $this->get(self::URL, $parameters);
+        return $this->get(self::URL, $parameters, $headers);
     }
 
     /*
      * Get Video Items By Id
-     */    
-    public function getItems($playlistId, array $parts = ['snippet'], array $otherParameters = []) {
+     */
+    public function getItems($list)
+    {
 
-        return $this->listByPlaylistId($playlistId, $parts, $otherParameters)['items'];
+        return $list['items'];
+    }
+
+    /*
+     * Get PlaylistItem Etag
+     */
+    public function getEtag($list)
+    {
+        return $list['etag'];
     }
 
     /*
      * Get Video Title
-     */     
-    public function getTitle($item) {
+     */
+    public function getTitle($item)
+    {
 
         return $item['snippet']['title'];
     }
 
     /*
      * Get Video Id
-     */     
-    public function getVideoId($item) {
+     */
+    public function getVideoId($item)
+    {
 
         return $item['snippet']['resourceId']['videoId'];
     }
 
     /*
      * Get Video Description
-     */          
-    public function getDescription($item) {
+     */
+    public function getDescription($item)
+    {
 
         return $item['snippet']['description'];
     }
 
     /*
      * Get Video PublishedAt
-     */       
-    public function getPublishedAt($item) {
+     */
+    public function getPublishedAt($item)
+    {
 
         return $item['snippet']['publishedAt'];
     }
@@ -87,7 +102,8 @@ class PlaylistItems extends AbstractApi {
      * If size is null, we return the highest valid size
      * Valid Size : default, medium, high, standard, maxres
      */
-    public function getThumbnail($item, $size = null) {
+    public function getThumbnail($item, $size = null)
+    {
 
 
         if ($size) {

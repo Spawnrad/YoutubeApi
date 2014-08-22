@@ -35,7 +35,7 @@ class Videos extends AbstractApi
      * @param  array  $otherParameters
      * @return array
      */
-    public function listById($id, array $parts = ['snippet'], array $otherParameters = [])
+    public function listById($id, array $parts = ['snippet'], array $otherParameters = [], array $headers = [])
     {
         $parameters = array_merge(
             ['part' => implode(',', $parts), 'id' => $id],
@@ -74,13 +74,22 @@ class Videos extends AbstractApi
 
         return $this->get(self::URL, $parameters);
     }
-    
+
     /*
      * Get Video Items By Id
      */
-    public function getItems($id, array $parts = ['snippet'], array $otherParameters = []) {
+    public function getItems($list)
+    {
 
-        return $this->listById($id, $parts, $otherParameters)['items'];
+        return $list['items'];
+    }
+
+    /*
+     * Get Video Etag
+     */
+    public function getEtag($list)
+    {
+        return $list['etag'];
     }
 
     /*
